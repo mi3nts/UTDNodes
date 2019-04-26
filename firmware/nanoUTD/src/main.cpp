@@ -19,9 +19,10 @@ bool MGS001Online;
 bool BME280Online;
 BME280 bme280; // I2C
 
-uint16_t sensingPeriod = 2070;
+uint16_t sensingPeriod = 3213;
 uint16_t initPeriod = 1500;
 
+unsigned long startTime;
 
 void setup() {
 
@@ -57,6 +58,7 @@ void setup() {
 // the loop routine runs over and over again forever:
 void loop() {
     //
+    startTime =  millis();
     delay(sensingPeriod);
     if(BME280Online)
     {
@@ -75,5 +77,5 @@ void loop() {
       readOPCN2Mints();
     }
 
-
+Serial.println(millis()-startTime);
 }
