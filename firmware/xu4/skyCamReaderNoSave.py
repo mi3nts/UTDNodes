@@ -16,10 +16,10 @@ dataFolder = mD.dataFolder
 
 
 def main():
-
-    sensorName = "SKYCAM"
-    dateTimeNow = datetime.datetime.now()
-    subFolder     = mSR.getWritePathSnaps(sensorName,dateTimeNow)
+    # edited april 16 th
+    sensorName   = "SKYCAM_002"
+    dateTimeNow  = datetime.datetime.now()
+    subFolder    = mSR.getWritePathSnaps(sensorName,dateTimeNow)
 
 
     onboardCapture = True
@@ -32,14 +32,14 @@ def main():
         loadedModel = pickle.load(open(modelName, 'rb'))
         print("Done Loading")
         predictionBinary,prediction = mSCR.getPredictionMatrix(loadedModel,oneDImage)
-        print("Writing Resulting Images ...")
-        binaryImage = mSCR.writeBinaryImageXU4(predictionBinary,imageShape,imagePath,onboardCapture)
-        sensorDictionary  = mSCR.getResultsXU4(currentImage,binaryImage,predictionBinary,prediction,imagePath,dateTimeNow)
+        print("Deleting Resulting Images ...")
+        binaryImage = mSCR.writeBinaryImageXU4NoSave(predictionBinary,imageShape,imagePath,onboardCapture)
+        sensorDictionary  = mSCR.getResultsXU4002(currentImage,binaryImage,predictionBinary,prediction,imagePath,dateTimeNow)
         mSR.sensorFinisher(dateTimeNow,sensorName,sensorDictionary)
         mSCR.timeTaken("Preiction time is ",start)
     except:
         print("TRY AGAIN")
-        
-        
+
+
 if __name__ == "__main__":
    main()

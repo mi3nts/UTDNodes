@@ -83,6 +83,18 @@ def sensorSend(sensorID,sensorData,dateTime):
         MGS001Write(sensorData,dateTime)
     if(sensorID=="SCD30"):
         SCD30Write(sensorData,dateTime)
+
+    if(sensorID=="VEML6075"):
+        VEML6075Write(sensorData,dateTime)
+    if(sensorID=="AS7262"):
+        AS7262Write(sensorData,dateTime)
+    if(sensorID=="PPD42NSDuo"):
+        PPD42NSDuoWrite(sensorData,dateTime)
+    if(sensorID=="OPCN2"):
+        OPCN2Write(sensorData,dateTime)
+
+
+
     if(sensorID=="OPCN3"):
         OPCN3Write(sensorData,dateTime)
     if(sensorID=="VEML6070"):
@@ -91,7 +103,6 @@ def sensorSend(sensorID,sensorData,dateTime):
         TSL2591Write(sensorData,dateTime)
     if(sensorID=="LIBRAD"):
         LIBRADWrite(sensorData,dateTime)
-
     if(sensorID=="HTU21D"):
         HTU21DWrite(sensorData,dateTime)
     if(sensorID=="BMP280"):
@@ -178,6 +189,7 @@ def VEML6070Write(sensorData,dateTime):
 
         sensorFinisher(dateTime,sensorName,sensorDictionary)
 
+
 def TSL2591Write(sensorData,dateTime):
     dataOut    = sensorData.split(':')
     sensorName = "TSL2591"
@@ -193,6 +205,49 @@ def TSL2591Write(sensorData,dateTime):
         	     ])
 
         sensorFinisher(dateTime,sensorName,sensorDictionary)
+
+def VEML6075Write(sensorData,dateTime):
+    dataOut    = sensorData.split(':')
+    sensorName = "VEML6075"
+    dataLength = 3
+    if(len(dataOut) ==(dataLength +1)):
+        sensorDictionary = OrderedDict([
+                ("dateTime"    , str(dateTime)),
+        	    ("UVALightLevel" ,dataOut[0]),
+                ("UVBLightLevel" ,dataOut[1]),
+        	    ("UVILightLevel" ,dataOut[2])
+        	     ])
+
+        sensorFinisher(dateTime,sensorName,sensorDictionary)
+
+
+def AS7262Write(sensorData,dateTime):
+    dataOut    = sensorData.split(':')
+    sensorName = "AS7262"
+    dataLength = 13
+    if(len(dataOut) ==(dataLength +1)):
+        sensorDictionary = OrderedDict([
+                ("dateTime"          ,str(dateTime)),
+                ("temperature"        ,dataOut[0]),
+                ("violetPre"          ,dataOut[1]),
+            	("bluePre"            ,dataOut[2]),
+                ("greenPre"           ,dataOut[3]),
+                ("yellowPre"          ,dataOut[4]),
+                ("orangePre"          ,dataOut[5]),
+        	    ("redPre"             ,dataOut[6]),
+                ("violetCalibrated"   ,dataOut[7]),
+            	("blueCalibrated"     ,dataOut[8]),
+                ("greenCalibrated"    ,dataOut[9]),
+                ("yellowCalibrated"   ,dataOut[10]),
+                ("orangeCalibrated"   ,dataOut[11]),
+                ("redCalibrated"      ,dataOut[12])
+        	    ])
+
+        sensorFinisher(dateTime,sensorName,sensorDictionary)
+
+
+
+
 
 
 
@@ -242,6 +297,48 @@ def INA219Write(sensorData,dateTime):
 
         #Getting Write Path
         sensorFinisher(dateTime,sensorName,sensorDictionary)
+
+def OPCN2Write(sensorData,dateTime):
+    dataOut    = sensorData.split(':')
+    sensorName = "OPCN2"
+    dataLength= 28
+    if(len(dataOut) == (dataLength +1)):
+        sensorDictionary = OrderedDict([
+                ("dateTime"    ,str(dateTime)),
+        		("valid"       ,dataOut[0]),
+            	("binCount0"   ,dataOut[1]),
+            	("binCount1"   ,dataOut[2]),
+            	("binCount2"   ,dataOut[3]),
+            	("binCount3"   ,dataOut[4]),
+            	("binCount4"   ,dataOut[5]),
+            	("binCount5"   ,dataOut[6]),
+            	("binCount6"   ,dataOut[7]),
+            	("binCount7"   ,dataOut[8]),
+            	("binCount8"   ,dataOut[9]),
+            	("binCount9"   ,dataOut[10]),
+            	("binCount10"  ,dataOut[11]),
+            	("binCount11"  ,dataOut[12]),
+            	("binCount12"  ,dataOut[13]),
+            	("binCount13"  ,dataOut[14]),
+            	("binCount14"  ,dataOut[15]),
+                ("binCount15"  ,dataOut[16]),
+                ("bin1TimeToCross"      ,dataOut[17]),
+                ("bin3TimeToCross"      ,dataOut[18]),
+                ("bin5TimeToCross"      ,dataOut[19]),
+                ("bin7TimeToCross"      ,dataOut[20]),
+                ("sampleFlowRate"       ,dataOut[21]),
+                ("temperatureOrPressure",dataOut[22]),
+                ("samplingPeriod"       ,dataOut[23]),
+                ("checkSum"             ,dataOut[24]),
+                ("pm1"                  ,dataOut[25]),
+                ("pm2_5"                ,dataOut[26]),
+                ("pm10"                 ,dataOut[27])
+                ])
+
+        #Getting Write Path
+        sensorFinisher(dateTime,sensorName,sensorDictionary)
+
+
 
 def OPCN3Write(sensorData,dateTime):
     dataOut    = sensorData.split(':')
@@ -298,6 +395,24 @@ def OPCN3Write(sensorData,dateTime):
         #Getting Write Path
         sensorFinisher(dateTime,sensorName,sensorDictionary)
 
+def PPD42NSDuoWrite(sensorData,dateTime):
+    dataOut    = sensorData.split(':')
+    sensorName = "PPD42NSDuo"
+    dataLength = 8
+    if(len(dataOut) ==(dataLength +1)):
+        sensorDictionary = OrderedDict([
+                ("sampleTimeSeconds"  ,str(dateTime)),
+        	    ("LPOPmMid"           ,dataOut[0]),
+            	("LPOPm10"            ,dataOut[1]),
+                ("ratioPmMid"         ,dataOut[2]),
+                ("ratioPm10"          ,dataOut[3]),
+        	    ("LPOPm10"            ,dataOut[4]),
+                ("concentrationPmMid" ,dataOut[5]),
+                ("concentrationPm2_5" ,dataOut[6]),
+                ("concentrationPm10"  ,dataOut[7])
+        	     ])
+
+        sensorFinisher(dateTime,sensorName,sensorDictionary)
 
 
 def PPD42NSWrite(sensorData,dateTime):
@@ -392,7 +507,7 @@ def writeCSV2(writePath,sensorDictionary,exists):
 
 def getWritePathIP(labelIn,dateTime):
     #Example  : MINTS_0061.csv
-    writePath = dataFolder+"/"+macAddress+"/"+"MINTS_"+ macAddress+ ".csv"
+    writePath = dataFolder+"/"+macAddress+"/"+"MINTS_"+ macAddress+ "_IP.csv"
     return writePath;
 
 
