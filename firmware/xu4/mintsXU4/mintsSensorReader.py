@@ -401,13 +401,13 @@ def PPD42NSDuoWrite(sensorData,dateTime):
     dataLength = 8
     if(len(dataOut) ==(dataLength +1)):
         sensorDictionary = OrderedDict([
-                ("sampleTimeSeconds"  ,str(dateTime)),
-        	    ("LPOPmMid"           ,dataOut[0]),
-            	("LPOPm10"            ,dataOut[1]),
-                ("ratioPmMid"         ,dataOut[2]),
-                ("ratioPm10"          ,dataOut[3]),
-        	    ("LPOPm10"            ,dataOut[4]),
-                ("concentrationPmMid" ,dataOut[5]),
+                ("dateTime"           ,str(dateTime)),
+                ("sampleTimeSeconds"  ,dataOut[0]),
+                ("LPOPmMid"           ,dataOut[1]),
+            	("LPOPm10"            ,dataOut[2]),
+                ("ratioPmMid"         ,dataOut[3]),
+                ("ratioPm10"          ,dataOut[4]),
+        	("concentrationPmMid" ,dataOut[5]),
                 ("concentrationPm2_5" ,dataOut[6]),
                 ("concentrationPm10"  ,dataOut[7])
         	     ])

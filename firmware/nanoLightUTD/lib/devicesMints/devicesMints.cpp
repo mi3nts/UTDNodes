@@ -87,41 +87,12 @@ bool initializeVEML6075Mints()
     if (veml.begin())
     {
       // cannot set to 800
-          veml.setIntegrationTime(VEML6075_400MS);
-          delay(1000);
-          Serial.print("Integration time set to ");
-          switch (veml.getIntegrationTime()) {
-            case VEML6075_50MS: Serial.print("50"); break;
-            case VEML6075_100MS: Serial.print("100"); break;
-            case VEML6075_200MS: Serial.print("200"); break;
-            case VEML6075_400MS: Serial.print("400"); break;
-            case VEML6075_800MS: Serial.print("800"); break;
-          }
-          Serial.println("ms");
-          // Set the high dynamic mode
-          veml.setHighDynamic(true);
+        veml.setIntegrationTime(VEML6075::IT_800MS);
+
+        // Set the high dynamic mode
+        veml.setHighDynamic(VEML6075::DYNAMIC_HIGH);
           // Get the mode
 
-              // Get the mode
-          if (veml.getHighDynamic()) {
-            Serial.println("High dynamic reading mode");
-          } else {
-            Serial.println("Normal dynamic reading mode");
-          }
-
-          // Set the mode
-          veml.setForcedMode(false);
-          // Get the mode
-          if (veml.getForcedMode()) {
-            Serial.println("Forced reading mode");
-          } else {
-            Serial.println("Continuous reading mode");
-          }
-
-          // Set the calibration coefficients
-          veml.setCoefficients(2.22, 1.33,  // UVA_A and UVA_B coefficients
-                             2.95, 1.74,  // UVB_C and UVB_D coefficients
-                             0.001461, 0.002591); // UVA and UVB responses
 
       Serial.println("VEML6075 Initiated");
 
@@ -139,8 +110,15 @@ bool initializeVEML6075Mints()
 
 void readVEML6075Mints(){
 
-  String readings[3] = { String(veml.readUVA()),String(veml.readUVB()),String(veml.readUVI()) };
-  sensorPrintMints("VEML6075",readings,3);
+  String readings[7] = {   String(veml.rawUva()),
+                           String(veml.rawUvb()),
+                           String(veml.visibleCompensation()),
+                           String(veml.irCompensation()),
+                           String(veml.uva()),
+                           String(veml.uvb()),
+                           String(veml.index())
+                         };
+  sensorPrintMints("VEML6075",readings,7);
 
 }
 

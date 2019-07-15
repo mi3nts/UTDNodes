@@ -21,7 +21,7 @@ bool    TSL2591Online;
 Adafruit_TSL2591 tsl = Adafruit_TSL2591(2591); // pass in a number for the sensor identifier (for your use later)
 
 bool VEML6075Online;
-Adafruit_VEML6075 veml = Adafruit_VEML6075();
+VEML6075 veml ;
 
 
 uint16_t sensingPeriod =3062;
@@ -47,6 +47,7 @@ void setup() {
 
 void loop() {
 // startTime = millis();
+
   delay(sensingPeriod);
    if(AS7262Online)
    {

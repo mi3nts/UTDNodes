@@ -5,7 +5,7 @@
 
 #include "Adafruit_AS726x.h"
 #include "Adafruit_TSL2591.h"
-#include "Adafruit_VEML6075.h"
+#include <SparkFun_VEML6075_Arduino_Library.h>
 
 #include "jobsMints.h"
 
@@ -16,7 +16,7 @@ extern Adafruit_AS726x ams;
 bool initializeAS7262Mints();
 void readAS7262Mints();
 
-extern Adafruit_VEML6075 veml;
+extern VEML6075 veml;
 bool initializeVEML6075Mints();
 void readVEML6075Mints();
 //

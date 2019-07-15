@@ -75,7 +75,17 @@ void readPPD42NSDuoMints(uint8_t sampleTimeSeconds)
       concentrationPm2_5 = concentrationPm10 - concentrationPmMid ;
 
 
-    String readings[8] = {String(sampleTimeSeconds), String(LPOPmMid), String(LPOPm10), String(ratioPmMid,2) , String(ratioPm10,2),String(concentrationPmMid,2),String(concentrationPm2_5,2), String(concentrationPm10,2)};
+    String readings[8] = {
+                          String(sampleTimeSeconds),
+                          String(LPOPmMid),
+                          String(LPOPm10),
+                          String(ratioPmMid,2) ,
+                          String(ratioPm10,2),
+                          String(concentrationPmMid,2),
+                          String(concentrationPm2_5,2),
+                          String(concentrationPm10,2)
+                        };
+                        
     sensorPrintMints("PPD42NSDuo",readings,8);
 
   }

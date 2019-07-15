@@ -1,8 +1,6 @@
-#include <Arduino.h>
-// #include "Adafruit_Sensor.h"
+#include "Arduino.h"
 #include "Seeed_BME280.h"
-// #include "MutichannelGasSensor.h"
-//
+#include "MutichannelGasSensor.h"
 #include "OPCN2NanoMints.h"
 #include "jobsMints.h"
 #include "devicesMints.h"
@@ -13,42 +11,37 @@
 
 OPCN2NanoMints opc = OPCN2NanoMints(CS);
 bool  OPCN2Online;
+
+bool SCD30Online;
+SCD30 scd;
+
 //
 bool MGS001Online;
 
 bool BME280Online;
 BME280 bme280; // I2C
 
-uint16_t sensingPeriod = 3213;
+uint16_t sensingPeriod = 2417;
 uint16_t initPeriod = 1500;
 
-unsigned long startTime;
 
 void setup() {
 
   delay(initPeriod);
   initializeSerialMints();
-  //
+
   delay(initPeriod);
   BME280Online = initializeBME280Mints();
   //
   delay(initPeriod);
   MGS001Online =  initializeMGS001Mints();
 
+  //
+  delay(initPeriod);
+  SCD30Online = initializeSCD30Mints();
+
   delay(initPeriod);
   OPCN2Online =  initializeOPCN2Mints();
-
-
-  // delay(initPeriod);
-  // SCD30Online = initializeSCD30Mints();
-  //
-
-
-
-
-  // delay(1000);
-  // INA219Online = initializeINA219Mints();
-
 
 }
 
@@ -57,8 +50,7 @@ void setup() {
 
 // the loop routine runs over and over again forever:
 void loop() {
-    //
-    startTime =  millis();
+
     delay(sensingPeriod);
     if(BME280Online)
     {
@@ -72,10 +64,16 @@ void loop() {
     }
     // //
     delay(sensingPeriod);
+    if(SCD30Online)
+    {
+      readSCD30Mints();
+    }
+    //
+    delay(sensingPeriod);
     if(OPCN2Online)
     {
       readOPCN2Mints();
     }
 
-Serial.println(millis()-startTime);
+
 }

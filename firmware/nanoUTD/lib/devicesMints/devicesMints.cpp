@@ -63,33 +63,33 @@ void readMGS001Mints(){
 }
 
 
-//
-//
-// // SCD30 ---------------------------------------
-// bool initializeSCD30Mints(){
-//   if (scd.begin()) {
-//     Serial.println("SCD30 Initiated");
-//     delay(1);
-//     return true;
-//   }else{
-//     Serial.println("SCD30 not found");
-//     delay(1);
-//     return false;
-//   }
-//
-//   delay(2000);
-// }
-//
-// void readSCD30Mints(){
-//
-//   uint16_t co2         = scd.getCO2();
-//   uint16_t temperature = scd.getTemperature();
-//   uint16_t humidity    = scd.getHumidity();
-//
-//   String readings[3] = { String(co2), String(temperature) , String(humidity) };
-//   sensorPrintMints("SCD30",readings,3);
-//
-// }
+
+
+// SCD30 ---------------------------------------
+bool initializeSCD30Mints(){
+  if (scd.begin()) {
+    Serial.println("SCD30 Initiated");
+    delay(1);
+    return true;
+  }else{
+    Serial.println("SCD30 not found");
+    delay(1);
+    return false;
+  }
+
+  delay(2000);
+}
+
+void readSCD30Mints(){
+
+  uint16_t co2         = scd.getCO2();
+  uint16_t temperature = scd.getTemperature();
+  uint16_t humidity    = scd.getHumidity();
+
+  String readings[3] = { String(co2), String(temperature) , String(humidity) };
+  sensorPrintMints("SCD30",readings,3);
+
+}
 
 //
 // // INA219  ---------------------------------------

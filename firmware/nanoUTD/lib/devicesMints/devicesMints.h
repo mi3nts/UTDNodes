@@ -2,13 +2,12 @@
 #define DEVICES_MINTS_H
 //
 #include <Arduino.h>
-// #include "Adafruit_Sensor.h"
-#include "Seeed_BME280.h"
-#include "MutichannelGasSensor.h"
 #include "OPCN2NanoMints.h"
+#include "MutichannelGasSensor.h"
 #include "jobsMints.h"
-// #include <Adafruit_INA219.h>
-// #include "SparkFun_SCD30_Arduino_Library.h"
+#include "Adafruit_Sensor.h"
+#include "Seeed_BME280.h"
+#include "SparkFun_SCD30_Arduino_Library.h"
 
 
 
@@ -31,9 +30,9 @@ void readBME280Mints();
 bool initializeMGS001Mints();
 void readMGS001Mints();
 //
-// extern SCD30 scd;
-// bool initializeSCD30Mints();
-// void readSCD30Mints();
+extern SCD30 scd;
+bool initializeSCD30Mints();
+void readSCD30Mints();
 
 //
 extern OPCN2NanoMints opc;
