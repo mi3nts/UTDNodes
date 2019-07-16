@@ -5,7 +5,7 @@
 
 #include "Adafruit_AS726x.h"
 #include "Adafruit_TSL2591.h"
-#include "Adafruit_VEML6075.h"
+#include <SparkFun_VEML6075_Arduino_Library.h>
 
 #include "devicesMints.h"
 #include "jobsMints.h"
