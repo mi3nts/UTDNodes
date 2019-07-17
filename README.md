@@ -28,7 +28,7 @@
 @reboot cd /home/teamlary/gitHubRepos/Lakitha/UTDNodes/firmware/xu4 && ./runAll.sh
 */1 * * * * rsync -avzrtu -e "ssh -p 2222" /home/teamlary/mintsData/raw/ mints@mintsdata.utdallas.edu:raw/
 */10 * * * * cd /home/teamlary/gitHubRepos/Lakitha/UTDNodes/firmware/xu4 && python3 skyCamReaderWithSave.py
-2,4,6,8,12,14,16,18,22,24,26,28,32,34,36,38,42,44,46,48,52,54,56,58 * * * * cd /home/teamlary/gitHubRepos/Lakitha/UTDNodes$
+2,4,6,8,12,14,16,18,22,24,26,28,32,34,36,38,42,44,46,48,52,54,56,58 * * * * cd /home/teamlary/gitHubRepos/Lakitha/UTDNodes/firmware/xu4 && python3 skyCamReaderNoSave.py
 */1 * * * * cd /home/teamlary/gitHubRepos/Lakitha/UTDNodes/firmware/xu4 && python3 deleter.py
 ```
 
