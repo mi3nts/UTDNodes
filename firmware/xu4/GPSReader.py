@@ -36,21 +36,24 @@ def main():
     #this will store the line
     line = []
     while True:
-
-        for c in ser.read():
-            line.append(chr(c))
-            if chr(c) == '\n':
-                dataString     = (''.join(line))
-                dateTime  = datetime.datetime.now()
-                if (dataString.startswith("$GPGGA") and mSR.getDeltaTime(lastGPGGA,delta)):
-                    mSR.GPSGPGGAWrite(dataString,dateTime)
-                    lastGPGGA = time.time()
-                if (dataString.startswith("$GPRMC") and mSR.getDeltaTime(lastGPGGA,delta)):
-                    mSR.GPSGPRMCWrite(dataString,dateTime)
-                    lastGPRMC = time.time()
-                    # # mSR.dataSplit(dataStringPost,datetime.datetime.now())
-                line = []
-                break
+        try:
+            for c in ser.read():
+                line.append(chr(c))
+                if chr(c) == '\n':
+                    dataString     = (''.join(line))
+                    dateTime  = datetime.datetime.now()
+                    if (dataString.startswith("$GPGGA") and mSR.getDeltaTime(lastGPGGA,delta)):
+                        mSR.GPSGPGGAWrite(dataString,dateTime)
+                        lastGPGGA = time.time()
+                    if (dataString.startswith("$GPRMC") and mSR.getDeltaTime(lastGPGGA,delta)):
+                        mSR.GPSGPRMCWrite(dataString,dateTime)
+                        lastGPRMC = time.time()
+                        # # mSR.dataSplit(dataStringPost,datetime.datetime.now())
+                    line = []
+                    break
+        except:
+            print("Incomplete String Read")
+            line = []
 
     ser.close()
 
