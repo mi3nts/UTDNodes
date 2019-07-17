@@ -1,6 +1,6 @@
 # UTDNodes
 ## crontab Input
-
+```
   GNU nano 2.5.3                      File: /tmp/crontab.S1HL7e/crontab                                                    
 
 # Edit this file to introduce tasks to be run by cron.
@@ -30,6 +30,7 @@
 */10 * * * * cd /home/teamlary/gitHubRepos/Lakitha/UTDNodes/firmware/xu4 && python3 skyCamReaderWithSave.py
 2,4,6,8,12,14,16,18,22,24,26,28,32,34,36,38,42,44,46,48,52,54,56,58 * * * * cd /home/teamlary/gitHubRepos/Lakitha/UTDNodes$
 */1 * * * * cd /home/teamlary/gitHubRepos/Lakitha/UTDNodes/firmware/xu4 && python3 deleter.py
+```
 
 
 
