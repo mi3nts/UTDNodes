@@ -1,4 +1,3 @@
-
 import os
 import sys
 import shutil
@@ -11,7 +10,7 @@ macAddress    = mD.macAddress
 
 
 def main():
-    deleteDaysBack = 10
+    deleteDaysBack = 14
     try:
         shutil.rmtree(getDeletePath(deleteDaysBack))
     except OSError as e:
