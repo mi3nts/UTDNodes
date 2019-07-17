@@ -92,9 +92,6 @@ def sensorSend(sensorID,sensorData,dateTime):
         PPD42NSDuoWrite(sensorData,dateTime)
     if(sensorID=="OPCN2"):
         OPCN2Write(sensorData,dateTime)
-
-
-
     if(sensorID=="OPCN3"):
         OPCN3Write(sensorData,dateTime)
     if(sensorID=="VEML6070"):
@@ -209,15 +206,18 @@ def TSL2591Write(sensorData,dateTime):
 def VEML6075Write(sensorData,dateTime):
     dataOut    = sensorData.split(':')
     sensorName = "VEML6075"
-    dataLength = 3
+    dataLength = 7
     if(len(dataOut) ==(dataLength +1)):
         sensorDictionary = OrderedDict([
                 ("dateTime"    , str(dateTime)),
-        	    ("UVALightLevel" ,dataOut[0]),
-                ("UVBLightLevel" ,dataOut[1]),
-        	    ("UVILightLevel" ,dataOut[2])
+        	    ("rawUVA" ,dataOut[0]),
+                ("rawUVB" ,dataOut[1]),
+        	    ("visibleCompensation" ,dataOut[2]),
+                ("irCompensation" ,dataOut[3]),
+                ("uva" ,dataOut[4]),
+                ("uvb" ,dataOut[5]),
+                ("index" ,dataOut[6]),
         	     ])
-
         sensorFinisher(dateTime,sensorName,sensorDictionary)
 
 
