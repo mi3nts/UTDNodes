@@ -43,10 +43,10 @@ def main():
                     dataString     = (''.join(line))
                     dateTime  = datetime.datetime.now()
                     if (dataString.startswith("$GPGGA") and mSR.getDeltaTime(lastGPGGA,delta)):
-                        mSR.GPSGPGGAWrite(dataString,dateTime)
+                        mSR.GPSGPGGA2Write(dataString,dateTime)
                         lastGPGGA = time.time()
                     if (dataString.startswith("$GPRMC") and mSR.getDeltaTime(lastGPGGA,delta)):
-                        mSR.GPSGPRMCWrite(dataString,dateTime)
+                        mSR.GPSGPRMC2Write(dataString,dateTime)
                         lastGPRMC = time.time()
                         # # mSR.dataSplit(dataStringPost,datetime.datetime.now())
                     line = []

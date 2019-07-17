@@ -26,7 +26,7 @@ import serial
 import pynmea2
 from collections import OrderedDict
 import netifaces as ni
-
+import math
 
 macAddress    = mD.macAddress
 dataFolder    = mD.dataFolder
@@ -434,6 +434,21 @@ def PPD42NSWrite(sensorData,dateTime):
 def getDeltaTime(beginTime,deltaWanted):
     return (time.time() - beginTime)> deltaWanted
 
+
+
+def getLatitudeCords(latitude,latitudeDirection):
+    latitudeCord      =  math.floor(latitude/100) +(latitude - 100*(math.floor(latitude/100)))/60
+    if(latitudeDirection=="S"):
+        latitudeCord = -1*latitudeCord
+    return latitudeCord
+
+def getLongitudeCords(longitude,longitudeDirection):
+    longitudeCord      =  math.floor(longitude/100) +(longitude - 100*(math.floor(longitude/100)))/60
+    if(longitudeDirection=="W"):
+        longitudeCord = -1*longitudeCord
+    return longitudeCord
+
+
 def GPSGPGGAWrite(dataString,dateTime):
 
     dataStringPost = dataString.replace('\n', '')
@@ -443,6 +458,36 @@ def GPSGPGGAWrite(dataString,dateTime):
         sensorDictionary = OrderedDict([
                 ("dateTime"          ,str(dateTime)),
                 ("timestamp"         ,sensorData.timestamp),
+                ("latitude"          ,sensorData.lat),
+                ("latitudeDirection" ,sensorData.lat_dir),
+                ("longitude"         ,sensorData.lon),
+                ("longitudeDirection",sensorData.lon_dir),
+                ("gpsQuality"        ,sensorData.gps_qual),
+                ("numberOfSatellites",sensorData.num_sats),
+                ("HorizontalDilution",sensorData.horizontal_dil),
+                ("altitude"          ,sensorData.altitude),
+                ("altitudeUnits"     ,sensorData.altitude_units),
+                ("undulation"        ,sensorData.geo_sep),
+                ("undulationUnits"   ,sensorData.geo_sep_units),
+                ("age"               ,sensorData.age_gps_data),
+                ("stationID"         ,sensorData.ref_station_id)
+        	     ])
+
+        #Getting Write Path
+        sensorFinisher(dateTime,sensorName,sensorDictionary)
+
+
+def GPSGPGGA2Write(dataString,dateTime):
+
+    dataStringPost = dataString.replace('\n', '')
+    sensorData = pynmea2.parse(dataStringPost)
+    if(sensorData.gps_qual>0):
+        sensorName = "GPSGPGGA2"
+        sensorDictionary = OrderedDict([
+                ("dateTime"          ,str(dateTime)),
+                ("timestamp"         ,sensorData.timestamp),
+                ("latitudeCordinate" ,getLatitudeCords(sensorData.lat,sensorData.lat_dir),
+                ("longitudeCordinate",getLongitudeCords(sensorData.lon,sensorData.lon_dir),
                 ("latitude"          ,sensorData.lat),
                 ("latitudeDirection" ,sensorData.lat_dir),
                 ("longitude"         ,sensorData.lon),
@@ -484,6 +529,37 @@ def GPSGPRMCWrite(dataString,dateTime):
 
         #Getting Write Path
         sensorFinisher(dateTime,sensorName,sensorDictionary)
+
+def GPSGPRMC2Write(dataString,dateTime):
+
+    dataStringPost = dataString.replace('\n', '')
+    sensorData = pynmea2.parse(dataStringPost)
+    if(sensorData.status=='A'):
+        sensorName = "GPSGPRMC2"
+        sensorDictionary = OrderedDict([
+                ("dateTime"             ,str(dateTime)),
+                ("timestamp"            ,sensorData.timestamp),
+                ("status"               ,sensorData.status),
+                ("latitudeCordinate"    ,getLatitudeCords(sensorData.lat,sensorData.lat_dir),
+                ("longitudeCordinate"   ,getLongitudeCords(sensorData.lon,sensorData.lon_dir),
+                ("latitude"             ,sensorData.lat),
+                ("latitudeDirection"    ,sensorData.lat_dir),
+                ("longitude"            ,sensorData.lon),
+                ("longitudeDirection"   ,sensorData.lon_dir),
+                ("speedOverGround"      ,sensorData.spd_over_grnd),
+                ("trueCourse"           ,sensorData.true_course),
+                ("dateStamp"            ,sensorData.datestamp),
+                ("magVariation"         ,sensorData.mag_variation),
+                ("magVariationDirection",sensorData.mag_var_dir)
+                 ])
+
+        #Getting Write Path
+        sensorFinisher(dateTime,sensorName,sensorDictionary)
+
+
+
+
+
 
 
 
