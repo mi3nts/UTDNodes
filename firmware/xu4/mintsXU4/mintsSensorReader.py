@@ -115,8 +115,8 @@ def BME280Write(sensorData,dateTime):
     dataLength = 4
     if(len(dataOut) == (dataLength +1)):
         sensorDictionary =  OrderedDict([
-                ("dateTime"     , str(dateTime)),
-        		("temperature"  ,dataOut[0]),
+                ("dateTime"     , str(dateTime)), # always the same
+        		("temperature"  ,dataOut[0]), # check with arduino code
             	("pressure"     ,dataOut[1]),
                 ("humidity"     ,dataOut[2]),
             	("altitude"     ,dataOut[3])
