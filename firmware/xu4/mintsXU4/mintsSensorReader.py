@@ -48,10 +48,13 @@ def sensorFinisher(dateTime,sensorName,sensorDictionary):
     print(sensorName)
     print(sensorDictionary)
 
+
+
+
 def sensorFinisherIP(dateTime,sensorName,sensorDictionary):
     #Getting Write Path
     writePath = getWritePathIP(sensorName,dateTime)
-    exists = directoryCheck(writePath)
+    exists = directoryCheck(writePath) 
     writeCSV2(writePath,sensorDictionary,exists)
     print(writePath)
     if(not(latestOff)):
@@ -83,7 +86,6 @@ def sensorSend(sensorID,sensorData,dateTime):
         MGS001Write(sensorData,dateTime)
     if(sensorID=="SCD30"):
         SCD30Write(sensorData,dateTime)
-
     if(sensorID=="VEML6075"):
         VEML6075Write(sensorData,dateTime)
     if(sensorID=="AS7262"):
@@ -108,6 +110,19 @@ def sensorSend(sensorID,sensorData,dateTime):
         INA219Write(sensorData,dateTime)
     if(sensorID=="PPD42NS"):
         PPD42NSWrite(sensorData,dateTime)
+    if(sensorID=="TMG3993"):
+        TMG3993Write(sensorData, dateTime)
+    if(sensorID=="GL001"):
+        GL001Write(sensorData, datetime)
+    if(sensorID=="GUV001"):
+        GUV001Write(sensorData, datetime)
+    if(sensorID=="APDS9002"):
+        APDS9002Write(sensorData, datetime)
+
+
+
+
+
 
 def BME280Write(sensorData,dateTime):
     dataOut    = sensorData.split(':')
@@ -431,6 +446,77 @@ def PPD42NSWrite(sensorData,dateTime):
         sensorFinisher(dateTime,sensorName,sensorDictionary)
 
 
+
+
+
+def TMG3993Write(sensorData, dateTime):
+    dataOut    = sensorData.split(':')
+    sensorName = "TMG3993"
+    dataLength = 5
+    if(len(dataOut) ==(dataLength +1)):
+        sensorDictionary = OrderedDict([
+                ("dateTime"           ,str(dateTime)),
+                ("infraRed"           ,dataOut[0]),
+            	("red"                ,dataOut[1]),
+                ("green"              ,dataOut[2]),
+                ("blue"               ,dataOut[3]),
+                ("proximity"          ,dataOut[4])
+        	     ])
+        sensorFinisher(dateTime,sensorName,sensorDictionary)
+
+def GL001Write(sensorData, dateTime):
+    print(dateTime)
+    dataOut    = sensorData.split(':')
+    sensorName = "GL001"
+    dataLength = 1
+    if(len(dataOut) ==(dataLength +1)):
+        sensorDictionary = OrderedDict([
+                ("dateTime"           ,str(dateTime)),
+                ("lightLevel"          ,dataOut[0])
+        	     ])
+        sensorFinisher(dateTime,sensorName,sensorDictionary)
+
+
+
+
+def GUV001Write(sensorData, dateTime):
+    dataOut    = sensorData.split(':')
+    sensorName = "GUV001"
+    dataLength = 1
+    if(len(dataOut) ==(dataLength +1)):
+        sensorDictionary = OrderedDict([
+                ("dateTime"           ,str(dateTime)),
+                ("uvLevel"          ,dataOut[0])
+        	     ])
+        sensorFinisher(dateTime,sensorName,sensorDictionary)
+
+
+
+
+def APDS9002Write(sensorData, dateTime):
+    dataOut    = sensorData.split(':')
+    sensorName = "APDS9002"
+    dataLength = 3
+    if(len(dataOut) ==(dataLength +1)):
+        sensorDictionary = OrderedDict([
+                ("dateTime"           ,str(dateTime)),
+                ("luminance"          ,dataOut[0]),
+                ("voltage"          ,dataOut[1]),
+                ("raw"          ,dataOut[2])
+        	     ])
+        sensorFinisher(dateTime,sensorName,sensorDictionary)
+
+
+
+
+
+
+
+
+
+
+
+
 def getDeltaTime(beginTime,deltaWanted):
     return (time.time() - beginTime)> deltaWanted
 
@@ -557,6 +643,11 @@ def GPSGPRMC2Write(dataString,dateTime):
 
         #Getting Write Path
         sensorFinisher(dateTime,sensorName,sensorDictionary)
+
+
+
+
+
 
 def writeCSV2(writePath,sensorDictionary,exists):
     keys =  list(sensorDictionary.keys())
