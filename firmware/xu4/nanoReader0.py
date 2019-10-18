@@ -43,8 +43,8 @@ def main():
                     dataString     = (''.join(line))
                     dataStringPost = dataString.replace('~', '')
                     print(dataStringPost)
-                    print("While loop: {0}".format(datetime.datetime.now()))
-                    mSR.dataSplit(dataStringPost,datetime.datetime.now())
+                    dt = datetime.datetime.now()
+                    mSR.dataSplit(dataStringPost, dt)
                     line = []
 
         ser.close()

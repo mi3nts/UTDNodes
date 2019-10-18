@@ -113,11 +113,11 @@ def sensorSend(sensorID,sensorData,dateTime):
     if(sensorID=="TMG3993"):
         TMG3993Write(sensorData, dateTime)
     if(sensorID=="GL001"):
-        GL001Write(sensorData, datetime)
+        GL001Write(sensorData, dateTime)
     if(sensorID=="GUV001"):
-        GUV001Write(sensorData, datetime)
+        GUV001Write(sensorData, dateTime)
     if(sensorID=="APDS9002"):
-        APDS9002Write(sensorData, datetime)
+        APDS9002Write(sensorData, dateTime)
 
 
 
@@ -465,7 +465,7 @@ def TMG3993Write(sensorData, dateTime):
         sensorFinisher(dateTime,sensorName,sensorDictionary)
 
 def GL001Write(sensorData, dateTime):
-    print(dateTime)
+    print("GL001Write: {0}".format(dateTime))
     dataOut    = sensorData.split(':')
     sensorName = "GL001"
     dataLength = 1
