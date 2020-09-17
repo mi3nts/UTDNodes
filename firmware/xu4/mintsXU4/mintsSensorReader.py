@@ -481,7 +481,6 @@ def GPSGPGGAWrite(dataString,dateTime):
 def GPSGPGGA2Write(dataString,dateTime):
     dataStringPost = dataString.replace('\n', '')
     sensorData = pynmea2.parse(dataStringPost)
-    latitudeCordinate = getLatitudeCords(sensorData.lat,sensorData.lat_dir)
 
     if(sensorData.gps_qual>0):
         sensorName = "GPSGPGGA2"
