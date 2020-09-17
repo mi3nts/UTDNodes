@@ -1,4 +1,3 @@
-#
 import serial
 import datetime
 from mintsXU4 import mintsSensorReader as mSR
@@ -24,31 +23,22 @@ def main():
         line = []
 
         while True:
-            # try:
-            #     for c in ser.read():
-            #         line.append(chr(c))
-            #         if chr(c) == '~':
-            #             dataString     = (''.join(line))
-            #             dataStringPost = dataString.replace('~', '')
-            #             print(dataStringPost)
-            #             mSR.dataSplit(dataStringPost,datetime.datetime.now())
-            #             line = []
-            #             break
-            # except:
-            #     print("Incomplete String Read")
-            #     line = []
-            for c in ser.read():
-                line.append(chr(c))
-                if chr(c) == '~':
-                    dataString     = (''.join(line))
-                    dataStringPost = dataString.replace('~', '')
-                    print(dataStringPost)
-                    dt = datetime.datetime.now()
-                    mSR.dataSplit(dataStringPost, dt)
-                    line = []
-
+            try:
+                for c in ser.read():
+                    line.append(chr(c))
+                    if chr(c) == '~':
+                        dataString     = (''.join(line))
+                        dataStringPost = dataString.replace('~', '')
+                        print(dataStringPost)
+                        mSR.dataSplit(dataStringPost,datetime.datetime.now())
+                        line = []
+                        break
+            except:
+                print("Incomplete String Read")
+                line = []
         ser.close()
 
 
 if __name__ == "__main__":
    main()
+
