@@ -52,7 +52,7 @@ dataFolderMQTT            = "/home/teamlary/mintsData/rawMQTT"
 
 nanoPorts                 = findNanoPorts()
 macAddress                = findMacAddress()
-latestOn                  = True
+latestOn                  = False
 mqttOn                    = True
 gpsPort                   = findPort("GPS/GNSS Receiver")
 
