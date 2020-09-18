@@ -1,7 +1,7 @@
 #include "Arduino.h"
-#include "Seeed_BME280.h"
-#include "MutichannelGasSensor.h"
-#include "OPCN2NanoMints.h"
+// #include "Seeed_BME280.h"
+// #include "MutichannelGasSensor.h"
+// #include "OPCN2NanoMints.h"
 #include "jobsMints.h"
 #include "devicesMints.h"
 

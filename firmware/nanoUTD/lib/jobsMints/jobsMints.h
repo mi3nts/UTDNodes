@@ -2,7 +2,7 @@
 #define JOBS_MINTS_H
 
 #include <Arduino.h>
-#include "devicesMints.h"
+
 
 
 void initializeSerialMints();

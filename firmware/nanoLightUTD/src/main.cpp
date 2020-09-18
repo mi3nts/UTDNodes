@@ -1,16 +1,14 @@
 
-#include <Wire.h>
-#include <Adafruit_I2CDevice.h>
-#include <Adafruit_I2CRegister.h>
+// #include <Wire.h>
+// #include <Adafruit_I2CDevice.h>
+// #include <Adafruit_I2CRegister.h>
 
-#include "Adafruit_AS726x.h"
-#include "Adafruit_TSL2591.h"
-#include <SparkFun_VEML6075_Arduino_Library.h>
+// #include "Adafruit_AS726x.h"
+// #include "Adafruit_TSL2591.h"
+// #include <SparkFun_VEML6075_Arduino_Library.h>
 
 #include "devicesMints.h"
 #include "jobsMints.h"
-
-
 
 
 //create the object

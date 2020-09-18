@@ -1,16 +1,14 @@
 #ifndef DEVICES_MINTS_H
 #define DEVICES_MINTS_H
 //
-#include <Arduino.h>
-#include "OPCN2NanoMints.h"
-#include "MutichannelGasSensor.h"
+// #include <Arduino.h>
 #include "jobsMints.h"
-#include "Adafruit_Sensor.h"
+
 #include "Seeed_BME280.h"
 #include "SparkFun_SCD30_Arduino_Library.h"
-
-
-
+#include <OPCN2NanoMints.h>
+#include "MutichannelGasSensor.h"
+#include "Adafruit_Sensor.h"
 
 
 
