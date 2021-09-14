@@ -3,6 +3,8 @@
 sleep 60
 python3 nanoReader0.py &
 sleep 5
+python3 ips7100ReaderV1.py &
+sleep 5
 python3 nanoReader1.py &
 sleep 5
 python3 nanoReader2.py &

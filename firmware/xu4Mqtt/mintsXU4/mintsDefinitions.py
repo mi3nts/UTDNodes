@@ -43,13 +43,21 @@ def findMacAddress():
 
     return "xxxxxxxx"
 
-
+def findIPSPorts():
+    ports = list(serial.tools.list_ports.comports())
+    ipsPorts = []
+    for p in ports:
+        currentPort = str(p[2])
+        if(currentPort.find("PID=10C4")>=0):
+            ipsPorts.append(str(p[0]).split(" ")[0])
+    return ipsPorts
 
 dataFolderReference       = "/home/teamlary/mintsData/reference"
 dataFolderMQTTReference   = "/home/teamlary/mintsData/referenceMQTT"
 dataFolder                = "/home/teamlary/mintsData/raw"
 dataFolderMQTT            = "/home/teamlary/mintsData/rawMQTT"
 
+ipsPorts                  = findIPSPorts()
 nanoPorts                 = findNanoPorts()
 macAddress                = findMacAddress()
 latestOn                  = False
@@ -61,18 +69,26 @@ mqttCredentialsFile      = 'mintsXU4/credentials.yml'
 mqttBroker               = "mqtt.circ.utdallas.edu"
 mqttPort                 =  8883  # Secure port
 
-print("----MINTS Definitions-----")
-print("Mac Address                : {0}".format(macAddress))
-print("Data Folder Raw            : {0}".format(dataFolder))
-print("Data Folder Raw MQTT       : {0}".format(dataFolderMQTT))
-print("Data Folder Reference      : {0}".format(dataFolderReference))
-print("Data Folder Reference MQTT : {0}".format(dataFolderMQTTReference))
-print("GPS Port                   : {0}".format(gpsPort))
-print("Latest On                  : {0}".format(latestOn))
-print("MQTT On                    : {0}".format(mqttOn))
-print("MQTT Credentials File      : {0}".format(mqttCredentialsFile))
-print("MQTT Broker and Port       : {0}, {1}".format(mqttOn,mqttPort))
-#-------------------------------------------#
-print("Nano Ports :")
-for dev in nanoPorts:
-    print("\t{0}".format(dev))
+if __name__ == "__main__":
+
+    print("----MINTS Definitions-----")
+    print("Mac Address                : {0}".format(macAddress))
+    print("Data Folder Raw            : {0}".format(dataFolder))
+    print("Data Folder Raw MQTT       : {0}".format(dataFolderMQTT))
+    print("Data Folder Reference      : {0}".format(dataFolderReference))
+    print("Data Folder Reference MQTT : {0}".format(dataFolderMQTTReference))
+    print("GPS Port                   : {0}".format(gpsPort))
+    print("Latest On                  : {0}".format(latestOn))
+    print("MQTT On                    : {0}".format(mqttOn))
+    print("MQTT Credentials File      : {0}".format(mqttCredentialsFile))
+    print("MQTT Broker and Port       : {0}, {1}".format(mqttOn,mqttPort))
+    #-------------------------------------------#
+    print("IPS Ports :")
+    for dev in ipsPorts:
+        print("\t{0}".format(dev))
+
+
+    #-------------------------------------------#
+    print("Nano Ports :")
+    for dev in nanoPorts:
+        print("\t{0}".format(dev))

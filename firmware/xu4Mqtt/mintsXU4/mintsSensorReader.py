@@ -126,7 +126,29 @@ def sensorSend(sensorID,sensorData,dateTime):
 
 
 
-
+def IPS7100Write(sensorData,dateTime):
+    dataOut    = sensorData.split(',')
+    sensorName = "IPS7100"
+    dataLength = 30
+    if(len(dataOut) == (dataLength)):
+        sensorDictionary =  OrderedDict([
+                ("dateTime" , str(dateTime)), # always the same
+        		("pc0_1"  ,dataOut[1]), 
+            	("pc0_3"  ,dataOut[3]),
+                ("pc0_5"  ,dataOut[5]),
+                ("pc1_0"  ,dataOut[7]),
+            	("pc2_5"  ,dataOut[9]),
+        		("pc5_0"  ,dataOut[11]), 
+            	("pc10_0" ,dataOut[13]),
+                ("pm0_1"  ,dataOut[15]),
+            	("pm0_3"  ,dataOut[17]),
+        		("pm0_5"  ,dataOut[19]), 
+            	("pm1_0"  ,dataOut[21]),
+                ("pm2_5"  ,dataOut[23]),
+            	("pm5_0"  ,dataOut[25]),         
+                ("pm10_0"  ,dataOut[27])
+                ])
+        sensorFinisher(dateTime,sensorName,sensorDictionary)
 
 def BME280Write(sensorData,dateTime):
     dataOut    = sensorData.split(':')
