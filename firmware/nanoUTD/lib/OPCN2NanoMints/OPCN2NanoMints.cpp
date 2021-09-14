@@ -29,7 +29,7 @@
 // Alpha Sensor Functions
  void OPCN2NanoMints::begin()
 {
-    printMintsBegin();
+    // printMintsBegin();
     Serial.println("Initiating SPI ");
     SPI.begin();
     SPI.setBitOrder(MSBFIRST);
@@ -40,7 +40,7 @@
     SPI.setClockDivider(SPI_CLOCK_DIV32);
     delay(400);
     Serial.println("---------------------------- ");
-    printMintsEnd();
+    // printMintsEnd();
 
 }
 
@@ -63,12 +63,12 @@ bool OPCN2NanoMints::initialize(){
         readConfigurationVariables2();
         delay(1000);
 
-        struct fanAndLaserStatus fanAndLaserState = setFanAndLaserStatus(true);
+        bool fanAndLaserState = setFanAndLaserStatus(true);
         delay(10000);
-        struct digitalPotStatus digitalPotState = readDigitalPotStatus();
+        bool digitalPotState = readDigitalPotStatus();
         readPMData() ;
 
-    return (fanAndLaserState.valid&&fanAndLaserState.fanAndLaserOn)&&(digitalPotState.fanOn&&digitalPotState.laserOn);
+    return (fanAndLaserState&&fanAndLaserState);
 }
 
 
@@ -77,14 +77,14 @@ bool OPCN2NanoMints::initialize(){
 
 
 
-  struct fanAndLaserStatus OPCN2NanoMints::setFanAndLaserStatus(bool status){
+  bool OPCN2NanoMints::setFanAndLaserStatus(bool status){
 
-        printMintsBegin();
+        // printMintsBegin();
         Serial.println("Setting Fan and Laser Status");
-        int  size = 1;
+        // int  size = 1;
         byte validator = 0XF3;
         byte initial ;
-        byte dataIn[size];
+        // byte dataIn[size];
         byte inputByte  =  0X03;;
 
         if(status){
@@ -92,7 +92,7 @@ bool OPCN2NanoMints::initialize(){
             beginTransfer();
             initial   = SPI.transfer(inputByte);
             delay(10);
-            dataIn[0] = SPI.transfer(0X00);
+            SPI.transfer(0X00);
             endTransfer();
         }else{
 
@@ -100,33 +100,33 @@ bool OPCN2NanoMints::initialize(){
           beginTransfer();
           initial   = SPI.transfer(inputByte);
           delay(10);
-          dataIn[0] = SPI.transfer(0X01);
+          SPI.transfer(0X01);
           endTransfer();
         }
 
-       printBytesRead(initial,dataIn,size);
+      //  printBytesRead(initial,dataIn,size);
 
-       fanAndLaserStatus dataOutput;
-       dataOutput.valid                = comparator(validator, initial,1);
-       dataOutput.fanAndLaserOn        = status;
+      //  fanAndLaserStatus dataOutput;
+      //  dataOutput.valid                = comparator(validator, initial,1);
+      //  dataOutput.fanAndLaserOn        = status;
 
-       Serial.print("Validity: ");
-       Serial.println(dataOutput.valid);
-       Serial.print(dataOutput.fanAndLaserOn); Serial.print(" ");
-       printMintsEnd();
+      //  Serial.print("Validity: ");
+      //  Serial.println(dataOutput.valid);
+      //  Serial.print(dataOutput.fanAndLaserOn); Serial.print(" ");
+      //  printMintsEnd();
 
-       return dataOutput;
+       return comparator(validator, initial,1);
     }
 
 
-    struct fanStatus OPCN2NanoMints::setFanStatus(bool status) {
+bool OPCN2NanoMints::setFanStatus(bool status) {
 
-      printMintsBegin();
+      // printMintsBegin();
       Serial.println("Setting Fan Status");
-      int  size = 1;
+      // int  size = 1;
       byte validator = 0XF3;
       byte initial ;
-      byte dataIn[size];
+      // byte dataIn[size];
       byte inputByte  =  0X03;;
 
       if(status){
@@ -134,7 +134,7 @@ bool OPCN2NanoMints::initialize(){
           beginTransfer();
           initial   = SPI.transfer(inputByte);
           delay(10);
-          dataIn[0] = SPI.transfer(0X04);
+          SPI.transfer(0X04);
           endTransfer();
       }else{
 
@@ -142,33 +142,33 @@ bool OPCN2NanoMints::initialize(){
         beginTransfer();
         initial   = SPI.transfer(inputByte);
         delay(10);
-        dataIn[0] = SPI.transfer(0X05);
+        SPI.transfer(0X05);
         endTransfer();
       }
 
-     printBytesRead(initial,dataIn,size);
+    //  printBytesRead(initial,dataIn,size);
 
-     fanStatus dataOutput;
-     dataOutput.valid                = comparator(validator, initial,1);
-     dataOutput.fanOn        = status;
+    //  fanStatus dataOutput;
+    //  dataOutput.valid                = comparator(validator, initial,1);
+    //  dataOutput.fanOn        = status;
 
-     Serial.print("Validity: ");
-     Serial.println(dataOutput.valid);
-     Serial.print(dataOutput.fanOn); Serial.print(" ");
-     printMintsEnd();
+    //  Serial.print("Validity: ");
+    //  Serial.println(dataOutput.valid);
+    //  Serial.print(dataOutput.fanOn); Serial.print(" ");
+    //  printMintsEnd();
      delay(1000);
-     return dataOutput;
+     return comparator(validator, initial,1);
       }
 
 
-struct laserStatus OPCN2NanoMints::setLaserStatus(bool status){
+bool OPCN2NanoMints::setLaserStatus(bool status){
 
-    printMintsBegin();
+    // printMintsBegin();
     Serial.println("Setting Laser Status");
-    int  size = 1;
+    // int  size = 1;
     byte validator = 0XF3;
     byte initial ;
-    byte dataIn[size];
+    // byte dataIn[size];
     byte inputByte  =  0X03;;
 
     if(status){
@@ -177,7 +177,7 @@ struct laserStatus OPCN2NanoMints::setLaserStatus(bool status){
         beginTransfer();
         initial   = SPI.transfer(inputByte);
         delay(10);
-        dataIn[0] = SPI.transfer(0X02);
+        SPI.transfer(0X02);
         endTransfer();
 
     }else{
@@ -186,202 +186,202 @@ struct laserStatus OPCN2NanoMints::setLaserStatus(bool status){
         beginTransfer();
         initial   = SPI.transfer(inputByte);
         delay(10);
-        dataIn[0] = SPI.transfer(0X03);
+        SPI.transfer(0X03);
         endTransfer();
     }
 
-       printBytesRead(initial,dataIn,size);
+      //  printBytesRead(initial,dataIn,size);
 
-       laserStatus dataOutput;
-       dataOutput.valid                = comparator(validator, initial,1);
-       dataOutput.laserOn        = status;
+      //  laserStatus dataOutput;
+      //  dataOutput.valid                = comparator(validator, initial,1);
+      //  dataOutput.laserOn        = status;
 
-       Serial.print("Validity: ");
-       Serial.println(dataOutput.valid);
-       Serial.print(dataOutput.laserOn); Serial.print(" ");
-       printMintsEnd();
-       delay(1000);
-       return dataOutput;
+      //  Serial.print("Validity: ");
+      //  Serial.println(dataOutput.valid);
+      //  Serial.print(dataOutput.laserOn); Serial.print(" ");
+      //  printMintsEnd();
+          delay(1000);
+       return comparator(validator, initial,1);
 
   }
 
-struct digitalPotStatus OPCN2NanoMints::readDigitalPotStatus() {
-       printMintsBegin();
+bool OPCN2NanoMints::readDigitalPotStatus() {
+      //  printMintsBegin();
        Serial.println("Reading Digital Pot Status");
-       int  size = 4;
+      //  int  size = 4;
        byte validator = 0XF3;
        byte initial ;
-       byte dataIn[size];
+      //  byte dataIn[size];
        byte inputByte  =  0X13;;
 
        beginTransfer();
        initial = SPI.transfer(inputByte);
        delayMicroseconds(9990);
-       for (int i = 0 ; i<size; i++)
+       for (int i = 0 ; i<4; i++)
           {
           delayMicroseconds(10);
-          dataIn[i] = SPI.transfer(inputByte);
+          SPI.transfer(inputByte);
           }
 
      endTransfer();
-     printBytesRead(initial,dataIn,size);
+    //  printBytesRead(initial,dataIn,size);
 
 
-   digitalPotStatus dataOutput;
-   memcpy(&dataOutput, &dataIn, sizeof(dataOutput));
-   dataOutput.valid  = comparator(validator, initial,1);
-   Serial.print("Validity: ");
-   Serial.println(dataOutput.valid);
-   Serial.print(dataOutput.fanOn);    Serial.print(" ");
-   Serial.print(dataOutput.laserOn);  Serial.print(" ");
-   Serial.print(dataOutput.fanDACVal );  Serial.print(" ");
-   Serial.print(dataOutput.laserDACVal);  Serial.print(" ");
-   printMintsEnd();
+  //  digitalPotStatus dataOutput;
+  //  memcpy(&dataOutput, &dataIn, sizeof(dataOutput));
+  //  dataOutput.valid  = comparator(validator, initial,1);
+  //  Serial.print("Validity: ");
+  //  Serial.println(dataOutput.valid);
+  //  Serial.print(dataOutput.fanOn);    Serial.print(" ");
+  //  Serial.print(dataOutput.laserOn);  Serial.print(" ");
+  //  Serial.print(dataOutput.fanDACVal );  Serial.print(" ");
+  //  Serial.print(dataOutput.laserDACVal);  Serial.print(" ");
+  //  printMintsEnd();
    delay(1000);
-   return dataOutput;
+   return comparator(validator, initial,1);
   }
 
 
-struct informationString OPCN2NanoMints::readInformationString() {
-    printMintsBegin();
+bool OPCN2NanoMints::readInformationString() {
+    // printMintsBegin();
     Serial.println("Reading information String");
-    int  size = 60;
+    // int  size = 60;
     byte validator = 0XF3;
     byte initial ;
-    byte dataIn[size];
+    // byte dataIn[size];
     byte inputByte  =  0X3F;
 
     beginTransfer();
     initial = SPI.transfer(inputByte);
     delayMicroseconds(9990);
-    for (int i = 0 ; i<size; i++)
+    for (int i = 0 ; i<60; i++)
     {
       delayMicroseconds(10);
-      dataIn[i] = SPI.transfer(inputByte);
+      SPI.transfer(inputByte);
     }
    endTransfer();
 
-   printBytesRead(initial,dataIn,size);
+  //  printBytesRead(initial,dataIn,size);
 
-    String info = "";
-      for (int i = 0; i<size ; i++){
-         info += String((char)dataIn[i]);
-      }
+  //   String info = "";
+  //     for (int i = 0; i<size ; i++){
+  //        info += String((char)dataIn[i]);
+  //     }
 
-     informationString dataOutput;
-     dataOutput.valid        = comparator(validator, initial,1);
-     dataOutput.information  = info;
+    //  informationString dataOutput;
+    //  dataOutput.valid        = comparator(validator, initial,1);
+    //  dataOutput.information  = info;
 
-     Serial.print("Validity: ");
-     Serial.print(dataOutput.valid)      ;   Serial.println(" ");
-     Serial.print(dataOutput.information);   Serial.print(" ");
-     printMintsEnd();
-       delay(1000);
-    return dataOutput;
+    //  Serial.print("Validity: ");
+    //  Serial.print(dataOutput.valid)      ;   Serial.println(" ");
+    //  Serial.print(dataOutput.information);   Serial.print(" ");
+    //  printMintsEnd();
+    //    delay(1000);
+    return  comparator(validator, initial,1);
     }
 
 
-struct serialNumber OPCN2NanoMints::readSerialNumber() {
-    printMintsBegin();
+bool OPCN2NanoMints::readSerialNumber() {
+    // printMintsBegin();
     Serial.println("Reading Serial Number");
-    int  size = 60;
+    // int  size = 60;
     byte validator = 0XF3;
     byte initial ;
-    byte dataIn[size];
+    // byte dataIn[size];
     byte inputByte  =  0X10;
 
     beginTransfer();
     initial = SPI.transfer(inputByte);
     delayMicroseconds(9990);
-    for (int i = 0 ; i<size; i++)
+    for (int i = 0 ; i<60; i++)
     {
     delayMicroseconds(10);
-    dataIn[i] = SPI.transfer(inputByte);
+    SPI.transfer(inputByte);
     }
     endTransfer();
 
-    printBytesRead(initial,dataIn,size);
+    // printBytesRead(initial,dataIn,size);
 
-    String info = "";
-    for (int i = 0; i < size; i++){
-       info += String((char)dataIn[i]);
-    }
+    // String info = "";
+    // for (int i = 0; i < size; i++){
+    //    info += String((char)dataIn[i]);
+    // }
 
-    serialNumber dataOutput;
-    dataOutput.valid   = comparator(validator, initial,1);
-    dataOutput.serial  = info;
-          //
+    // serialNumber dataOutput;
+    // dataOutput.valid   = comparator(validator, initial,1);
+    // dataOutput.serial  = info;
+    //       //
 
-    Serial.print("Validity: ");
-    Serial.print(dataOutput.valid) ;  Serial.println(" ");
-    Serial.print(dataOutput.serial);  Serial.print(" ");
-    printMintsEnd();
-       delay(1000);
-    return dataOutput;
+    // Serial.print("Validity: ");
+    // Serial.print(dataOutput.valid) ;  Serial.println(" ");
+    // Serial.print(dataOutput.serial);  Serial.print(" ");
+    // printMintsEnd();
+    //    delay(1000);
+    return comparator(validator, initial,1);
 
 }
 
 
 
 
-struct firmwareVersion OPCN2NanoMints::readFirmwareVersion() {
-    printMintsBegin();
+bool OPCN2NanoMints::readFirmwareVersion() {
+    // printMintsBegin();
     Serial.println("Reading Firmware Version ");
-    int  size = 2;
+    // int  size = 2;
     byte validator = 0XF3;
     byte initial ;
-    byte dataIn[size];
+    // byte dataIn[size];
     byte inputByte  =  0X12;
 
     beginTransfer();
     initial = SPI.transfer(inputByte);
     delayMicroseconds(9990);
-    for (int i = 0 ; i<size; i++)
+    for (int i = 0 ; i<2; i++)
     {
       delayMicroseconds(10);
-      dataIn[i] = SPI.transfer(inputByte);
+      SPI.transfer(inputByte);
     }
     endTransfer();
 
-    printBytesRead(initial,dataIn,size);
+  //   // printBytesRead(initial,dataIn,size);
 
 
-    firmwareVersion dataOutput;
-    memcpy(&dataOutput, &dataIn, sizeof(dataOutput));
-    dataOutput.valid  = comparator(validator, initial,1);
+  //   firmwareVersion dataOutput;
+  //   memcpy(&dataOutput, &dataIn, sizeof(dataOutput));
+  //   dataOutput.valid  = comparator(validator, initial,1);
 
-   Serial.print("Validity: ");
-   Serial.print(dataOutput.valid)  ; Serial.println(" ");
-   Serial.print(dataOutput.major);   Serial.print(" ");
-   Serial.print(dataOutput.minor);   Serial.print(" ");
-   printMintsEnd();
-       delay(1000);
-return  dataOutput;
+  //  Serial.print("Validity: ");
+  //  Serial.print(dataOutput.valid)  ; Serial.println(" ");
+  //  Serial.print(dataOutput.major);   Serial.print(" ");
+  //  Serial.print(dataOutput.minor);   Serial.print(" ");
+  //  printMintsEnd();
+  //      delay(1000);
+return  comparator(validator, initial,1);
 
 }
 
 
 
 void OPCN2NanoMints::readConfigurationVariables() {
-  printMintsBegin();
+  // printMintsBegin();
   Serial.println("Reading Configeration Varibles ");
-  int  size = 256;
+  // int  size = 256;
   byte validator = 0XF3;
   byte initial ;
-  byte dataIn[size];
+  // byte dataIn[size];
   byte inputByte  =  0X3C;
 
   beginTransfer();
   initial = SPI.transfer(inputByte);
   delayMicroseconds(9990);
-  for (int i = 0 ; i<size; i++)
+  for (int i = 0 ; i<256; i++)
   {
     delayMicroseconds(10);
-    dataIn[i] = SPI.transfer(inputByte);
+    SPI.transfer(inputByte);
   }
   endTransfer();
 
-  printBytesRead(initial,dataIn,size);
+  // printBytesRead(initial,dataIn,size);
 
 //
 //   configurationVariables dataOutput;
@@ -498,25 +498,25 @@ void OPCN2NanoMints::readConfigurationVariables() {
 }
 
 void OPCN2NanoMints::readConfigurationVariables2() {
-  printMintsBegin();
+  // printMintsBegin();
   Serial.println("Reading Configeration Varibles 2");
-  int  size = 9;
+  // int  size = 9;
   byte validator = 0XF3;
   byte initial ;
-  byte dataIn[size];
+  // byte dataIn[size];
   byte inputByte  =  0X3D;
 
   beginTransfer();
   initial = SPI.transfer(inputByte);
   delayMicroseconds(9990);
-  for (int i = 0 ; i<size; i++)
+  for (int i = 0 ; i<9; i++)
   {
     delayMicroseconds(10);
-    dataIn[i] = SPI.transfer(inputByte);
+    SPI.transfer(inputByte);
   }
   endTransfer();
 
-  printBytesRead(initial,dataIn,size);
+  // printBytesRead(initial,dataIn,size);
 
 
 //   configurationVariables2 dataOutput;
@@ -639,50 +639,50 @@ return  dataOutput;
 }
 
 
-struct pmData OPCN2NanoMints::readPMData() {
-  printMintsBegin();
+bool OPCN2NanoMints::readPMData() {
+  // printMintsBegin();
   Serial.println("Reading Pm Data");
   int  size = 12;
   byte validator = 0XF3;
   byte initial ;
-  byte dataIn[size];
+  // byte dataIn[size];
   byte inputByte  =  0X32;
 
   beginTransfer();
   initial = SPI.transfer(inputByte);
   delayMicroseconds(9990);
-  for (int i = 0 ; i<size; i++)
+  for (int i = 0 ; i<12; i++)
   {
     delayMicroseconds(10);
-    dataIn[i] = SPI.transfer(inputByte);
+    SPI.transfer(inputByte);
   }
   endTransfer();
 
-  printBytesRead(initial,dataIn,size);
+  // // printBytesRead(initial,dataIn,size);
 
 
-  pmData dataOutput;
-  memcpy(&dataOutput, &dataIn, sizeof(dataOutput));
-  dataOutput.valid  = comparator(validator, initial,1);
+  // pmData dataOutput;
+  // memcpy(&dataOutput, &dataIn, sizeof(dataOutput));
+  // dataOutput.valid  = comparator(validator, initial,1);
 
 
 
- Serial.print("Validity: ");
- Serial.println(dataOutput.valid);
- Serial.println("-------------------------------------------------");
- Serial.println("pm1");
- Serial.println(dataOutput.pm1);
- Serial.println("-------------------------------------------------");
- Serial.println("pm2.5");
- Serial.println(dataOutput.pm2_5);
- Serial.println("-------------------------------------------------");
- Serial.println("pm10");
- Serial.println(dataOutput.pm10);
+//  Serial.print("Validity: ");
+//  Serial.println(dataOutput.valid);
+//  Serial.println("-------------------------------------------------");
+//  Serial.println("pm1");
+//  Serial.println(dataOutput.pm1);
+//  Serial.println("-------------------------------------------------");
+//  Serial.println("pm2.5");
+//  Serial.println(dataOutput.pm2_5);
+//  Serial.println("-------------------------------------------------");
+//  Serial.println("pm10");
+//  Serial.println(dataOutput.pm10);
 
 
-printMintsEnd();
+// printMintsEnd();
 
-return  dataOutput;
+return  comparator(validator, initial,1);
 
 }
 
@@ -717,41 +717,41 @@ delay(1);
 }
 
 
-void OPCN2NanoMints::printBytesRead(byte initial[], byte dataIn[], int sizeOfArray)
-{
-    Serial.println("--------------------------------");
-    Serial.println("Printing Initial Bytes----------");
-    Serial.print(initial[0],HEX);
-    Serial.print(" ");
-    Serial.println("--------------------------------");
-    Serial.println("Printing Byte Array-------------");
+// void OPCN2NanoMints::printBytesRead(byte initial[], byte dataIn[], int sizeOfArray)
+// {
+//     Serial.println("--------------------------------");
+//     Serial.println("Printing Initial Bytes----------");
+//     Serial.print(initial[0],HEX);
+//     Serial.print(" ");
+//     Serial.println("--------------------------------");
+//     Serial.println("Printing Byte Array-------------");
 
-    for (int i = 0 ; i<sizeOfArray; i++)
-        {
-            Serial.print(dataIn[i],HEX);
-            Serial.print(" ");
-            if(i%10==9)
-              {
-              Serial.println("");
-              }
-        }
+//     for (int i = 0 ; i<sizeOfArray; i++)
+//         {
+//             Serial.print(dataIn[i],HEX);
+//             Serial.print(" ");
+//             if(i%10==9)
+//               {
+//               Serial.println("");
+//               }
+//         }
 
-  Serial.println("");
-  Serial.println("--------------------------------");
-}
-
-
-
-void OPCN2NanoMints::printMintsBegin(){
-  Serial.println("");
-  Serial.println("--------------------------------");
-  Serial.println("-------------MINTS--------------");
-
-}
+//   Serial.println("");
+//   Serial.println("--------------------------------");
+// }
 
 
-  void OPCN2NanoMints::printMintsEnd(){
-    Serial.println("");
-    Serial.println("-------------MINTS--------------");
-    Serial.println("--------------------------------");
-}
+
+// void OPCN2NanoMints::printMintsBegin(){
+//   Serial.println("");
+//   Serial.println("--------------------------------");
+//   Serial.println("-------------MINTS--------------");
+
+// }
+
+
+//   void OPCN2NanoMints::printMintsEnd(){
+//     Serial.println("");
+//     Serial.println("-------------MINTS--------------");
+//     Serial.println("--------------------------------");
+// }

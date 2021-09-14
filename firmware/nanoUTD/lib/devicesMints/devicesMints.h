@@ -4,6 +4,7 @@
 // #include <Arduino.h>
 #include "jobsMints.h"
 
+#include "seeed_bme680.h"
 #include "Seeed_BME280.h"
 #include "SparkFun_SCD30_Arduino_Library.h"
 #include <OPCN2NanoMints.h>
@@ -11,7 +12,7 @@
 #include "Adafruit_Sensor.h"
 
 
-
+#define IIC_ADDR  uint8_t(0x77)
 // void sendCommand2DevicesMints(String command);
 //
 // void setTimeMints(String command);
@@ -19,7 +20,10 @@
 // void printTimeOnlyMints();
 //
 // extern bool serialOut;
-
+// bme680
+extern Seeed_BME680 bme680;
+bool initializeBME680Mints();
+void readBME680Mints();
 //
 extern BME280 bme280;
 bool initializeBME280Mints();
