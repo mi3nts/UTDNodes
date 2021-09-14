@@ -20,90 +20,90 @@ public:
   void endTransfer();
   void printBytesRead(byte initial[],byte dataIn[], int sizeOfArray) ;
 
-  struct fanAndLaserStatus setFanAndLaserStatus(bool status);
-  struct fanStatus setFanStatus(bool status);
-  struct laserStatus setLaserStatus(bool status);
-  struct laserPower setLaserPower(byte laserPower);
-  struct fanPower setFanPower(byte fanPower);
+  bool setFanAndLaserStatus(bool status);
+  bool setFanStatus(bool status);
+  bool setLaserStatus(bool status);
+  bool setLaserPower(byte laserPower);
+  bool setFanPower(byte fanPower);
 
-  struct digitalPotStatus readDigitalPotStatus();
-  struct informationString readInformationString();
-  struct serialNumber readSerialNumber();
-  struct firmwareVersion readFirmwareVersion();
+  bool readDigitalPotStatus();
+  bool readInformationString();
+  bool readSerialNumber();
+  bool readFirmwareVersion();
 
   // There are two
   void readConfigurationVariables();
   void readConfigurationVariables2();
 
   struct histogramData readHistogramData() ;
-  struct pmData readPMData() ;
+  bool readPMData() ;
 
-  void printMintsBegin();
-  void printMintsEnd();
+  // void printMintsBegin();
+  // void printMintsEnd();
   bool comparator(byte arrayOne[], byte arraTwo[], int size);
 
 };
 
 
 
-    struct fanAndLaserStatus
-    {
-    bool fanAndLaserOn;
-    bool valid;
-    };
+    // struct fanAndLaserStatus
+    // {
+    // bool fanAndLaserOn;
+    // bool valid;
+    // };
 
-    struct fanStatus
-    {
-    bool fanOn;
-    bool valid;
-    };
+    // struct fanStatus
+    // {
+    // bool fanOn;
+    // bool valid;
+    // };
 
-    struct laserStatus
-    {
-    bool laserOn;
-    bool valid;
-    };
+    // struct laserStatus
+    // {
+    // bool laserOn;
+    // bool valid;
+    // };
 
-    struct fanPower
-    {
-    uint8_t fanPower;
-    bool valid;
-    };
+    // struct fanPower
+    // {
+    // uint8_t fanPower;
+    // bool valid;
+    // };
 
-    struct laserPower
-    {
-    uint8_t laserPower;
-    bool valid;
-    };
+    // struct laserPower
+    // {
+    // uint8_t laserPower;
+    // bool valid;
+    // };
 
-    struct digitalPotStatus
-    {
-    uint8_t fanOn;
-    uint8_t laserOn;
-    uint8_t fanDACVal;
-    uint8_t laserDACVal;
-    bool valid;
+    // struct digitalPotStatus
+    // {
+    // uint8_t fanOn;
+    // uint8_t laserOn;
+    // uint8_t fanDACVal;
+    // uint8_t laserDACVal;
+    // bool valid;
 
-    };
+    // };
 
-    struct informationString
-    {
-    String information;
-    bool valid;
-    };
+    // struct informationString
+    // {
+    // String information;
+    // bool valid;
+    // };
 
-    struct serialNumber
-    {
-    String serial;
-    bool valid;
-    };
+    // struct serialNumber
+    // {
+    // String serial;
+    // bool valid;
+    // };
 
-    struct firmwareVersion
-    {
-    uint8_t major;
-    uint8_t minor;
-    bool valid;
-    };
+    // struct firmwareVersion
+    // {
+    // uint8_t major;
+    // uint8_t minor;
+    // bool valid;
+    // };
 
   //
   //   struct configurationVariables

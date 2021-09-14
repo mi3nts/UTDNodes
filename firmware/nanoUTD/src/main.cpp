@@ -18,8 +18,12 @@ SCD30 scd;
 //
 bool MGS001Online;
 
+
 bool BME280Online;
 BME280 bme280; // I2C
+
+bool BME680Online;
+Seeed_BME680 bme680(IIC_ADDR); /* IIC PROTOCOL */
 
 uint16_t sensingPeriod = 2417;
 uint16_t initPeriod = 1500;
@@ -32,7 +36,10 @@ void setup() {
 
   delay(initPeriod);
   BME280Online = initializeBME280Mints();
-  //
+  
+  delay(initPeriod);
+  BME680Online = initializeBME680Mints();
+
   delay(initPeriod);
   MGS001Online =  initializeMGS001Mints();
 
@@ -55,6 +62,12 @@ void loop() {
     if(BME280Online)
     {
       readBME280Mints();
+    }
+    
+    delay(sensingPeriod);
+    if(BME680Online)
+    {
+      readBME680Mints();
     }
     // //
     delay(sensingPeriod);
