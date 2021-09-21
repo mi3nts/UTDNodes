@@ -1,5 +1,5 @@
 #!/bin/bash
-#
+
 sleep 60
 python3 nanoReader.py 0 &
 sleep 5
