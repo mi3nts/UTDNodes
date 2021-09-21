@@ -86,6 +86,8 @@ def sensorSplit(dataQuota,dateTime):
 def sensorSend(sensorID,sensorData,dateTime):
     if(sensorID=="BME280"):
         BME280Write(sensorData,dateTime)
+    if(sensorID=="BME680"):
+        BME680Write(sensorData,dateTime)        
     if(sensorID=="MGS001"):
         MGS001Write(sensorData,dateTime)
     if(sensorID=="SCD30"):
@@ -163,6 +165,20 @@ def BME280Write(sensorData,dateTime):
             	("altitude"     ,dataOut[3])
                 ])
         sensorFinisher(dateTime,sensorName,sensorDictionary)
+
+def BME680Write(sensorData,dateTime):
+    dataOut    = sensorData.split(':')
+    sensorName = "BME680"
+    dataLength = 4
+    if(len(dataOut) == (dataLength +1)):
+        sensorDictionary =  OrderedDict([
+                ("dateTime"     , str(dateTime)), # always the same
+        		("temperature"  ,dataOut[0]), # check with arduino code
+            	("pressure"     ,dataOut[1]),
+                ("humidity"     ,dataOut[2]),
+            	("gas"     ,dataOut[3])
+                ])
+        sensorFinisher(dateTime,sensorName,sensorDictionary)   
 
 
 def MGS001Write(sensorData,dateTime):
