@@ -10,3 +10,5 @@ sleep 5
 python3 GPSReader.py &
 sleep 5
 python3 ipReader.py
+
+
