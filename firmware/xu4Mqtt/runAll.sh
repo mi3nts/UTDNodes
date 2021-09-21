@@ -9,6 +9,8 @@ python3 nanoReader.py 2 &
 sleep 5
 python3 GPSReader.py &
 sleep 5
+python3 IPS7100Reader.py &
+sleep 5
 python3 ipReader.py
 
 
