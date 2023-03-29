@@ -45,9 +45,15 @@ def main():
                    if (dataString.startswith("$GPGGA") and mSR.getDeltaTime(lastGPGGA,delta)):
                        mSR.GPSGPGGA2Write(dataString,dateTime)
                        lastGPGGA = time.time()
-                   if (dataString.startswith("$GPRMC") and mSR.getDeltaTime(lastGPGGA,delta)):
+                   if (dataString.startswith("$GPRMC") and mSR.getDeltaTime(lastGPRMC,delta)):
                        mSR.GPSGPRMC2Write(dataString,dateTime)
                        lastGPRMC = time.time()
+                   if (dataString.startswith("$GNGGA") and mSR.getDeltaTime(lastGPGGA,delta)):
+                       mSR.GPSGPGGA2Write(dataString,dateTime)
+                       lastGPGGA = time.time()
+                   if (dataString.startswith("$GNRMC") and mSR.getDeltaTime(lastGPRMC,delta)):
+                       mSR.GPSGPRMC2Write(dataString,dateTime)
+                       lastGPRMC = time.time()                    
                    line = []
                    break
        except:
