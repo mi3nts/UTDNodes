@@ -1,3 +1,4 @@
 credentials.yml
 corrections.yml
+*.joblib
 *.pyc
