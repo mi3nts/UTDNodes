@@ -25,6 +25,7 @@ import datetime
 import joblib
 import json
 import math
+
 # For humidity correction
 # In order to apply corrections, the sensor finisher code needs to be updated
 #    1) The YAML file should have a Climate Sensor and a PM sensor - May be the model location
@@ -34,7 +35,11 @@ import math
 #        - Temperature validity 
 #        - Dew Likelyhood
 #        - Climate Data Current Validity
-
+#     Check list
+#       - Appropraite sensors avaiable 
+#       - make sure that the units are appropriate 
+#       - git ignore: Model File, Corrections file  
+#       - sensor reeder update on sensor finisher 
 
 climateSensor     = mD.climateSensor
 pmSensor          = mD.pmSensor
