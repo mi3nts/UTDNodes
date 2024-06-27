@@ -24,7 +24,7 @@ from collections import OrderedDict
 import datetime
 import joblib
 import json
-
+import math
 # For humidity correction
 # In order to apply corrections, the sensor finisher code needs to be updated
 #    1) The YAML file should have a Climate Sensor and a PM sensor - May be the model location
@@ -222,19 +222,24 @@ def mlCorrectedPM(temperature,humidity,pressure,dewPoint,cor_pm2_5):
         print(e)
         return cor_pm2_5, 0;
 
-
-
-
 def is_valid_temperature(temp):
     return -20 <= temp <= 50  # Assuming temperature is in Celsius
 
 def is_valid_humidity(humidity):
     return 0 <= humidity <= 100  # Assuming humidity is in percentage
 
-
-
 def keepClimateData(dateTime,sensorName,sensorDictionary):   
     climateData = [] 
+    
+    if sensorName == "WIMDA":
+        climateData =  OrderedDict([
+            ("dateTime"     ,str(dateTime)),
+            ("temperature"  ,sensorDictionary['airTemperature']),
+            ("pressure"     ,1000*float(sensorDictionary['barrometricPressureBars'])),
+            ("humidity"     ,sensorDictionary['relativeHumidity']),
+            ("dewPoint"     ,sensorDictionary['dewPoint']),
+                ])
+            
     if sensorName == "BME280V2":
         climateData =  OrderedDict([
             ("dateTime"     ,str(dateTime)),
@@ -244,15 +249,45 @@ def keepClimateData(dateTime,sensorName,sensorDictionary):
             ("dewPoint"     ,sensorDictionary['dewPoint']),
                 ])
 
-    if sensorName == "WIMDA":
+    if sensorName == "BME680":
+        temperature = sensorDictionary['temperature']
+        pressure    = sensorDictionary['pressure']*10
+        humidity    = sensorDictionary['humidity']
+        A = (100*pressure) / 101325;
+        B = 1 / 5.25588
+        C = pow(A, B)
+        C = 1.0 - C
+        altitude = C / 0.0000225577
+        dewPoint = 243.04 * (math.log(humidity/100.0) + ((17.625 * temperature)/(243.04 + temperature)))/(17.625 - math.log(humidity/100.0) - ((17.625 * temperature)/(243.04 + temperature)))
+        
         climateData =  OrderedDict([
             ("dateTime"     ,str(dateTime)),
-            ("temperature"  ,sensorDictionary['airTemperature']),
-            ("pressure"     ,1000*float(sensorDictionary['barrometricPressureBars'])),
-            ("humidity"     ,sensorDictionary['relativeHumidity']),
-            ("dewPoint"     ,sensorDictionary['dewPoint']),
-                ])
+            ("temperature"  ,temperature),
+            ("pressure"     ,pressure),
+            ("humidity"     ,humidity),
+            ("dewPoint"     ,dewPoint),
+            ])
+
+    if sensorName == "BME280":
+        temperature = sensorDictionary['temperature']
+        pressure    = sensorDictionary['pressure']/100
+        humidity    = sensorDictionary['humidity']
+        A = (100*pressure) / 101325;
+        B = 1 / 5.25588
+        C = pow(A, B)
+        C = 1.0 - C
+        altitude = C / 0.0000225577
+        dewPoint = 243.04 * (math.log(humidity/100.0) + ((17.625 * temperature)/(243.04 + temperature)))/(17.625 - math.log(humidity/100.0) - ((17.625 * temperature)/(243.04 + temperature)))
         
+        climateData =  OrderedDict([
+            ("dateTime"     ,str(dateTime)),
+            ("temperature"  ,temperature),
+            ("pressure"     ,pressure),
+            ("humidity"     ,humidity),
+            ("dewPoint"     ,dewPoint),
+            ])
+
+
     if climateData:
         writeJSONLatestClimate(sensorDictionary,sensorName)
 

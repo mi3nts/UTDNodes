@@ -1,6 +1,9 @@
 
 from getmac import get_mac_address
 import serial.tools.list_ports
+import yaml
+
+
 
 def findPort(find):
     ports = list(serial.tools.list_ports.comports())
@@ -69,9 +72,20 @@ mqttCredentialsFile      = 'mintsXU4/credentials.yml'
 mqttBroker               = "mqtt.circ.utdallas.edu"
 mqttPort                 =  8883  # Secure port
 
+
+
+# For Humidity Corrections
+correctionsFile          = 'mintsXU4/corrections.yml'
+corrections              = yaml.load(open(correctionsFile))
+
+pmSensor                 = corrections['pmSensor']    
+climateSensor            = corrections['climateSensor']    
+modelFile                = 'mintsXU4/climateCorrectionModel.joblib'
+dataFolderTmp            = "/home/teamlary/mintsDataTmp"
+
 if __name__ == "__main__":
 
-    print("----MINTS Definitions-----")
+    print("---- MINTS Definitions ----")
     print("Mac Address                : {0}".format(macAddress))
     print("Data Folder Raw            : {0}".format(dataFolder))
     print("Data Folder Raw MQTT       : {0}".format(dataFolderMQTT))
@@ -82,12 +96,18 @@ if __name__ == "__main__":
     print("MQTT On                    : {0}".format(mqttOn))
     print("MQTT Credentials File      : {0}".format(mqttCredentialsFile))
     print("MQTT Broker and Port       : {0}, {1}".format(mqttOn,mqttPort))
+
+    #-------------------------------------------#
+    # Corrections 
+    print("--- Corrections ---")
+    print("PM Sensor                 : {0}".format(pmSensor))
+    print("Climate Sensor            : {0}".format(climateSensor))
+
     #-------------------------------------------#
     print("IPS Ports :")
     for dev in ipsPorts:
         print("\t{0}".format(dev))
-
-
+        
     #-------------------------------------------#
     print("Nano Ports :")
     for dev in nanoPorts:
