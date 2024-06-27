@@ -27,6 +27,8 @@ import pynmea2
 from collections import OrderedDict
 import netifaces as ni
 import math
+from mintsPMCorrections import corrections as mC
+
 
 macAddress     = mD.macAddress
 dataFolder     = mD.dataFolder
@@ -52,6 +54,9 @@ def sensorFinisher(dateTime,sensorName,sensorDictionary):
     print(sensorName)
     print(sensorDictionary)
 
+
+    mC.doPrediction(sensorName,sensorDictionary,dateTime)
+    print()
 
 
 
